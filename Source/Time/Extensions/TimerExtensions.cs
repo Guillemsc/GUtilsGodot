@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using GUtils.Time.Timers;
-using GUtilsGodot.Tasks.Yielding;
 
 namespace GUtilsGodot.Time.Extensions;
 
@@ -22,7 +21,7 @@ public static class TimerExtensions
     {
         while (!timer.HasReached(time) && !cancellationToken.IsCancellationRequested)
         {
-            await GodotTask.Yield();
+            await GUtilsGodot.Extensions.TaskExtensions.GodotYield();
         }
     }
 }
