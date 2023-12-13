@@ -1,4 +1,5 @@
 ﻿using Godot;
+using GUtils.Extensions;
 using GUtils.Optionals;
 
 namespace GUtilsGodot.Extensions;
@@ -23,5 +24,48 @@ public static class NodeExtensions
         }
         
         return Optional<T>.None;
+    }
+
+    public static void RemoveParent(this Node node)
+    {
+        Node parent = node.GetParent();
+
+        if (parent == null)
+        {
+            return;
+        }
+        
+        parent.RemoveChild(node);
+    }
+
+    public static void SetParent(this Node node, Node parent)
+    {
+        node.RemoveParent();
+        parent.AddChild(node);
+    }
+    
+    public static void SetSiblingIndex(this Node node, int index)
+    {
+        Node parent = node.GetParent();
+
+        if (parent == null)
+        {
+            return;
+        }
+
+        int childsCount = parent.GetChildren().Count;
+        int finalIndex = MathExtensions.Clamp(index, 0, childsCount);
+        
+        parent.MoveChild(node, finalIndex);
+    }
+
+    public static void SetAsFirstSibling(this Node node)
+    {
+        node.SetSiblingIndex(0);
+    }
+    
+    public static void SetAsLastSibling(this Node node)
+    {
+        node.SetSiblingIndex(int.MaxValue);
     }
 }

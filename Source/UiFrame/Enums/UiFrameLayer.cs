@@ -1,0 +1,17 @@
+using GUtils.Enums.Utils;
+
+namespace GUtilsGodot.UiFrame.Enums
+{
+    /// Starting from the top, ordered from less to more priority.
+    public enum UiFrameLayer
+    {
+        Default,
+        Popup,
+        LoadingScreen,
+    }
+
+    public sealed class UiFrameLayerInfo : EnumInfo<UiFrameLayer>
+    {
+
+    }
+}

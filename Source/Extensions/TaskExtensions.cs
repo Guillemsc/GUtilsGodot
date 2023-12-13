@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace GUtilsGodot.Extensions;
 
-public class TaskExtensions
+public static class TaskExtensions
 {
     public static Task GodotYield()
     {
