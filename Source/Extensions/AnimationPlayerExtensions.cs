@@ -35,4 +35,9 @@ public static class AnimationPlayerExtensions
             await TaskExtensions.GodotYield();
         }
     }
+    
+    public static void Play<T>(this AnimationPlayer animationPlayer, T animationName) where T : Enum
+    {
+        animationPlayer.Play(animationName.ToString());
+    }
 }
