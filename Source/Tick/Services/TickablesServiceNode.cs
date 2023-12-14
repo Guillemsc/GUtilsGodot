@@ -12,6 +12,9 @@ public partial class TickablesServiceNode : Node, ITickablesService
     public override void _Process(double delta)
         => _tickablesService.Tick();
 
+    public override void _PhysicsProcess(double delta)
+        => _tickablesService.PhysicsTick();
+
     public void Add(ITickable tickable, TickType tickType)
         => _tickablesService.Add(tickable, tickType);
 
