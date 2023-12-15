@@ -24,4 +24,9 @@ public static class AnimatedSprite2DExtensions
     {
         animatedSprite2D.Play(animationName.ToString());
     }
+    
+    public static bool IsPlaying<T>(this AnimatedSprite2D animatedSprite2D, T animationName) where T : Enum
+    {
+        return string.Equals(animatedSprite2D.Animation, animationName.ToString());
+    }
 }

@@ -194,14 +194,17 @@ namespace GUtilsGodot.UiStack.Builder
 
         public Task Execute(CancellationToken cancellationToken)
         {
-            foreach(IInstruction instruction in _instructionsToPlay)
+            async Task Run(CancellationToken ct)
             {
-                _taskSequencer.Play(instruction.Execute);
+                foreach(IInstruction instruction in _instructionsToPlay)
+                {
+                    await instruction.Execute(cancellationToken);
+                    
+                    if(cancellationToken.IsCancellationRequested || ct.IsCancellationRequested) return;
+                }
             }
 
-            cancellationToken.Register(_taskSequencer.Kill);
-
-            return _taskSequencer.AwaitCompletition(cancellationToken);
+            return _taskSequencer.PlayAndAwait(Run);
         }
 
         public void ExecuteAsync()
