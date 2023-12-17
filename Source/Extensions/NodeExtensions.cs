@@ -1,5 +1,4 @@
 ﻿using Godot;
-using GUtils.Extensions;
 using GUtils.Optionals;
 
 namespace GUtilsGodot.Extensions;
@@ -54,7 +53,7 @@ public static class NodeExtensions
         }
 
         int childsCount = parent.GetChildren().Count;
-        int finalIndex = MathExtensions.Clamp(index, 0, childsCount);
+        int finalIndex = GUtils.Extensions.MathExtensions.Clamp(index, 0, childsCount);
         
         parent.MoveChild(node, finalIndex);
     }
