@@ -7,8 +7,8 @@ public partial class Rect2dNode : Node2D
 {
     [Export] public Vector2 Size = new(100, 100);
     [Export] public Color DebugColor = new(1, 0, 0);
-
-    public override void _Ready()
+    
+    public override void _EnterTree()
     {
         if (Engine.IsEditorHint())
         {

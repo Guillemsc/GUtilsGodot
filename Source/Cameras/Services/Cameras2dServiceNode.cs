@@ -11,6 +11,8 @@ public partial class Cameras2dServiceNode : Node2D, ICameras2dService
     [Export] Camera2D? Camera2D;
 
     readonly List<ICamera2dBehaviour> _camera2dBehaviours = new();
+
+    bool _previousStateValid;
     
     public Camera2D MainCamera => Camera2D!;
 
@@ -20,8 +22,10 @@ public partial class Cameras2dServiceNode : Node2D, ICameras2dService
         
         foreach (ICamera2dBehaviour camera2dBehaviour in _camera2dBehaviours)
         {
-            camera2dBehaviour.Tick(dt, Camera2D!);
+            camera2dBehaviour.Tick(dt, _previousStateValid, Camera2D!);
         }
+
+        _previousStateValid = true;
     }
     
     public void AddBehaviour(ICamera2dBehaviour behaviour)
@@ -54,5 +58,10 @@ public partial class Cameras2dServiceNode : Node2D, ICameras2dService
     public void ClearBehaviours()
     {
         _camera2dBehaviours.Clear();
+    }
+
+    public void InvalidateState()
+    {
+        _previousStateValid = false;
     }
 }

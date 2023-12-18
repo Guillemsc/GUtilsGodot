@@ -11,6 +11,16 @@ public sealed class BoundsPosition2dProcessor : IPosition2dProcessor
     
     public Vector2 Process(float dt, Camera2D camera2D, Vector2 vector2)
     {
+        return GetCameraPositionInsideBounds(camera2D, vector2);
+    }
+    
+    public void SetBounds(Rect2dNode bounds)
+    {
+        _boundsRect = bounds;
+    }
+
+    public Vector2 GetCameraPositionInsideBounds(Camera2D camera2D, Vector2 vector2)
+    {
         bool hasBoundsRect = _boundsRect.TryGet(out Rect2dNode rect2dNode);
 
         if (!hasBoundsRect)
@@ -18,7 +28,7 @@ public sealed class BoundsPosition2dProcessor : IPosition2dProcessor
             return vector2;
         }
 
-        Vector2 cameraSize = camera2D.GetViewportRect().Size;
+        Vector2 cameraSize = camera2D.GetGameViewportRect().Size;
         Vector2 cameraHalfSize = cameraSize * 0.5f;
         
         Rect2 rect = rect2dNode.GetGlobalRect();
@@ -53,10 +63,5 @@ public sealed class BoundsPosition2dProcessor : IPosition2dProcessor
         vector2.Y = Mathf.Clamp(vector2.Y, min.Y, max.Y);
 
         return vector2;
-    }
-    
-    public void SetBounds(Rect2dNode bounds)
-    {
-        _boundsRect = bounds;
     }
 }

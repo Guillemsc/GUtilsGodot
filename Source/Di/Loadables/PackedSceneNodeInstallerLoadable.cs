@@ -3,6 +3,7 @@ using GUtils.Di.Installers;
 using GUtils.Disposing.Disposables;
 using GUtils.Loadables;
 using GUtilsGodot.Di.Installers;
+using GUtilsGodot.Extensions;
 
 namespace GUtilsGodot.Di.Loadables;
 
@@ -24,6 +25,7 @@ public sealed class PackedSceneNodeInstallerLoadable : ILoadable<IInstaller>
 
         IDisposable<IInstaller> disposable = new CallbackDisposable<IInstaller>(nodeInstaller, o =>
         {
+            nodeInstaller.RemoveParent();
             nodeInstaller.QueueFree();
         });
 

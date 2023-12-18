@@ -11,7 +11,7 @@ public sealed class FollowTargetCamera2dBehaviour : ICamera2dBehaviour
     float _velocity = 5f;
     readonly List<IPosition2dProcessor> _position2dProcessors = new();
     
-    public void Tick(float dt, Camera2D camera2D)
+    public void Tick(float dt, bool previousStateValid, Camera2D camera2D)
     {
         bool hasTarget = _target.TryGet(out Node2D targetNode);
 
@@ -26,11 +26,21 @@ public sealed class FollowTargetCamera2dBehaviour : ICamera2dBehaviour
         {
             target = position2dProcessor.Process(dt, camera2D, target);
         }
+
+        Vector2 newPosition;
+
+        if (previousStateValid)
+        {
+            float velocity = _velocity * dt;
         
-        float velocity = _velocity * dt;
+            newPosition = camera2D.GlobalPosition.Lerp(target, velocity);   
+        }
+        else
+        {
+            newPosition = targetNode.GlobalPosition;
+        }
         
-        Vector2 newPositions = camera2D.GlobalPosition.Lerp(target, velocity);
-        camera2D.GlobalPosition = newPositions;
+        camera2D.GlobalPosition = newPosition;
     }
 
     public void SetTarget(Node2D node2D)

@@ -9,7 +9,7 @@ public sealed class BoundsFramingCamera2dBehaviour : ICamera2dBehaviour
 {
     Optional<Rect2dNode> _boundsRect;
     
-    public void Tick(float dt, Camera2D camera2D)
+    public void Tick(float dt, bool previousStateValid, Camera2D camera2D)
     {
         bool hasBoundsRect = _boundsRect.TryGet(out Rect2dNode rect2dNode);
 
