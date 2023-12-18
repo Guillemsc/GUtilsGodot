@@ -8,7 +8,7 @@ public static class NodeExtensions
     public static Optional<T> GetNodeOnParentHierarchy<T>(
         this Node node,
         bool includeCurrent = true
-        ) where T : Node
+        ) 
     {
         Node? checkingNode = includeCurrent ? node : node.GetParent();
 
