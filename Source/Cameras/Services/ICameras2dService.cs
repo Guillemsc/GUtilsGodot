@@ -13,4 +13,6 @@ public interface ICameras2dService
     void RemoveBehaviour(ICamera2dBehaviour behaviour);
     Optional<T> GetBehaviour<T>() where T : ICamera2dBehaviour;
     void ClearBehaviours();
+
+    void InvalidateState();
 }
