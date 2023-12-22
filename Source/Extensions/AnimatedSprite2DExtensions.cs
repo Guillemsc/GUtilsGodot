@@ -9,13 +9,8 @@ public static class AnimatedSprite2DExtensions
 {
     public static async Task AwaitCompletition(this AnimatedSprite2D animatedSprite2D, CancellationToken cancellationToken)
     {
-        while (animatedSprite2D.IsPlaying())
+        while (!cancellationToken.IsCancellationRequested && animatedSprite2D.IsPlaying())
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
-
             await TaskExtensions.GodotYield();
         }
     }

@@ -25,13 +25,8 @@ public static class AnimationPlayerExtensions
     
     public static async Task AwaitCompletition(this AnimationPlayer animationPlayer, CancellationToken cancellationToken)
     {
-        while (animationPlayer.IsPlaying())
+        while (!cancellationToken.IsCancellationRequested && animationPlayer.IsPlaying())
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
-
             await TaskExtensions.GodotYield();
         }
     }
