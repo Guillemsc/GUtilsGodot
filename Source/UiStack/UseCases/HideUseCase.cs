@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Godot;
 using GUtils.Repositories;
 using GUtilsGodot.UiStack.Entries;
 using GUtilsGodot.UiStack.Enums;
@@ -44,7 +45,7 @@ namespace GUtilsGodot.UiStack.UseCases
                 return;
             }
 
-            //entry.Node.gameObject.SetInteractable(false);
+            entry!.Node.MouseFilter = Control.MouseFilterEnum.Ignore;
 
             if (!entry!.IsPopup)
             {

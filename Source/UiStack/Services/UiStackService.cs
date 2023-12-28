@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Godot;
 using GUtils.Extensions;
 using GUtils.Repositories;
 using GUtils.Tasks.Sequencing.Sequencer;
@@ -62,6 +63,8 @@ namespace GUtilsGodot.UiStack.Services
             entry.Visible.SetVisible(visible: true, instantly: true, CancellationToken.None).RunAsync();;
             entry.Visible.SetVisible(visible: false, instantly: true, CancellationToken.None).RunAsync();;
 
+            entry!.Node.MouseFilter = Control.MouseFilterEnum.Ignore;
+            
             _entriesRepository.Add(entry.Id, entry);
 
             _uiFrameService.Register(entry.Node, layer);
@@ -111,7 +114,7 @@ namespace GUtilsGodot.UiStack.Services
                 return;
             }
 
-            //entry.Node.gameObject.SetInteractable(false);
+            entry!.Node.MouseFilter = Control.MouseFilterEnum.Ignore;
         }
 
         public IUiStackSequenceBuilder New()

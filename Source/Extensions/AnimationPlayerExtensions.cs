@@ -25,10 +25,31 @@ public static class AnimationPlayerExtensions
     
     public static async Task AwaitCompletition(this AnimationPlayer animationPlayer, CancellationToken cancellationToken)
     {
-        while (!cancellationToken.IsCancellationRequested && animationPlayer.IsPlaying())
+        while (!cancellationToken.IsCancellationRequested && 
+               animationPlayer.IsInstanceValid() &&
+               animationPlayer.IsPlaying()
+               )
         {
             await TaskExtensions.GodotYield();
         }
+    }
+    
+    public static Task PlayAndAwaitCompletition(
+        this AnimationPlayer animationPlayer, 
+        string animationName, 
+        bool instantly, 
+        CancellationToken cancellationToken
+        )
+    {
+        animationPlayer.Play(animationName);
+
+        if (instantly)
+        {
+            animationPlayer.Seek(animationPlayer.CurrentAnimationLength);
+            return Task.CompletedTask;
+        }
+
+        return animationPlayer.AwaitCompletition(cancellationToken);
     }
     
     public static void Play<T>(this AnimationPlayer animationPlayer, T animationName) where T : Enum

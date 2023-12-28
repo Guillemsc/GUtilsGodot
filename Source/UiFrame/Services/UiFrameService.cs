@@ -33,6 +33,7 @@ namespace GUtilsGodot.UiFrame.Services
 
                 Control newLayer = new Control();
                 newLayer.Name = layerName;
+                newLayer.MouseFilter = Control.MouseFilterEnum.Ignore;
                 AddChild(newLayer);
 
                 newLayer.SetAnchorsPreset(Control.LayoutPreset.FullRect, true);
@@ -83,7 +84,7 @@ namespace GUtilsGodot.UiFrame.Services
                 return;
             }
             
-            originalParent.AddChild(node);
+            node.SetParent(originalParent);
             
             _originalParents.Remove(originalParent);
         }

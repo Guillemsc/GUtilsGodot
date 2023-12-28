@@ -1,4 +1,5 @@
-﻿using GUtils.Repositories;
+﻿using Godot;
+using GUtils.Repositories;
 using GUtils.Tasks.Sequencing.Instructions;
 using GUtilsGodot.UiFrame.Services;
 using GUtilsGodot.UiStack.Entries;
@@ -35,8 +36,8 @@ namespace GUtilsGodot.UiStack.Instructions
                 //                            $"but it was not registered, at {nameof(SetInteractableInstruction)}");
                 return;
             }
-
-            //entry.Node.gameObject.SetInteractable(_interactable);
+            
+            entry!.Node.MouseFilter = _interactable ? Control.MouseFilterEnum.Stop : Control.MouseFilterEnum.Ignore;
         }
     }
 }

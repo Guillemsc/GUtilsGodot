@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Godot;
 using GUtils.Repositories;
 using GUtilsGodot.UiFrame.Services;
 using GUtilsGodot.UiStack.Entries;
@@ -43,7 +44,7 @@ namespace GUtilsGodot.UiStack.UseCases
                 return;
             }
 
-            //entry.Node.gameObject.SetInteractable(false);
+            entry!.Node.MouseFilter = Control.MouseFilterEnum.Pass;
 
             if(!entry!.IsPopup)
             {
@@ -69,7 +70,7 @@ namespace GUtilsGodot.UiStack.UseCases
 
             UiStackEntryUtils.Refresh(entry, RefreshType.AfterShow);
 
-            //entry.Node.gameObject.SetInteractable(true);
+            entry!.Node.MouseFilter = Control.MouseFilterEnum.Ignore;
         }
     }
 }

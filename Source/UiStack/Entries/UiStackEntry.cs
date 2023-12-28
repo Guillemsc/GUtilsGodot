@@ -10,14 +10,14 @@ namespace GUtilsGodot.UiStack.Entries
     public sealed class UiStackEntry
     {
         public IUiStackElement Id { get; }
-        public Node Node { get; }
+        public Control Node { get; }
         public IVisible Visible { get; }
         public bool IsPopup { get; }
         public IReadOnlyList<UiStackEntryRefresh> RefreshList { get; }
 
         public UiStackEntry(
             IUiStackElement id,
-            Node node,
+            Control node,
             IVisible visible,
             bool isPopup,
             params UiStackEntryRefresh[] refreshList

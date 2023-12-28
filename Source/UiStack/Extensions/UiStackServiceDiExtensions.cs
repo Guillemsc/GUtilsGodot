@@ -12,7 +12,7 @@ namespace GUtilsGodot.UiStack.Extensions
     {
         static IDiBindingActionBuilder<T> LinkToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
-            Node node,
+            Control node,
             bool isPopup,
             UiFrameLayer layer
         )
@@ -49,7 +49,7 @@ namespace GUtilsGodot.UiStack.Extensions
         static IDiBindingActionBuilder<T> LinkToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             BindingResolverDelegate<IVisible> bindingResolverDelegate,
-            Node node,
+            Control node,
             bool isPopup,
             UiFrameLayer layer
             )
@@ -88,7 +88,7 @@ namespace GUtilsGodot.UiStack.Extensions
         static IDiBindingActionBuilder<T> LinkToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             IVisible visible,
-            Node node,
+            Control node,
             bool isPopup,
             UiFrameLayer layer
         )
@@ -125,7 +125,7 @@ namespace GUtilsGodot.UiStack.Extensions
         public static IDiBindingActionBuilder<T> LinkUiToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             BindingResolverDelegate<IVisible> bindingResolverDelegate,
-            Node node
+            Control node
         )
             where T : IUiStackElement
         {
@@ -136,10 +136,25 @@ namespace GUtilsGodot.UiStack.Extensions
                 UiFrameLayer.Default
             );
         }
+        
+        public static IDiBindingActionBuilder<T> LinkUiToUiStackService<T>(
+            this IDiBindingActionBuilder<T> actionBuilder,
+            IVisible visible,
+            Control node
+        )
+            where T : IUiStackElement
+        {
+            return actionBuilder.LinkToUiStackService(
+                visible,
+                node,
+                false,
+                UiFrameLayer.Default
+            );
+        }
 
         public static IDiBindingActionBuilder<T> LinkUiToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
-            Node node
+            Control node
         )
             where T : IVisible, IUiStackElement
         {
@@ -152,7 +167,7 @@ namespace GUtilsGodot.UiStack.Extensions
 
         public static IDiBindingActionBuilder<T> LinkPopupToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
-            Node node
+            Control node
         )
             where T : IVisible, IUiStackElement
         {
@@ -166,7 +181,7 @@ namespace GUtilsGodot.UiStack.Extensions
         public static IDiBindingActionBuilder<T> LinkPopupToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             BindingResolverDelegate<IVisible> bindingResolverDelegate,
-            Node node
+            Control node
         )
             where T : IUiStackElement
         {
@@ -180,7 +195,7 @@ namespace GUtilsGodot.UiStack.Extensions
 
         public static IDiBindingActionBuilder<T> LinkLoadingScreenToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
-            Node node
+            Control node
         )
             where T : IVisible, IUiStackElement
         {
@@ -194,7 +209,7 @@ namespace GUtilsGodot.UiStack.Extensions
         public static IDiBindingActionBuilder<T> LinkLoadingScreenToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             BindingResolverDelegate<IVisible> bindingResolverDelegate,
-            Node node
+            Control node
         )
             where T : IUiStackElement
         {
@@ -209,7 +224,7 @@ namespace GUtilsGodot.UiStack.Extensions
         public static IDiBindingActionBuilder<T> LinkLoadingScreenToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             IVisible visible,
-            Node node
+            Control node
         )
             where T : IUiStackElement
         {

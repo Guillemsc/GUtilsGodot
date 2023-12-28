@@ -67,4 +67,9 @@ public static class NodeExtensions
     {
         node.SetSiblingIndex(int.MaxValue);
     }
+
+    public static bool IsInstanceValid(this Node node)
+    {
+        return GodotObject.IsInstanceValid(node);
+    }
 }
