@@ -33,6 +33,11 @@ public static class AnimationPlayerExtensions
             await TaskExtensions.GodotYield();
         }
     }
+
+    public static void Reset(this AnimationPlayer animationPlayer)
+    {
+        animationPlayer.Seek(0);
+    }
     
     public static Task PlayAndAwaitCompletition(
         this AnimationPlayer animationPlayer, 
