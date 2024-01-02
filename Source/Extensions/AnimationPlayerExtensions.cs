@@ -57,6 +57,20 @@ public static class AnimationPlayerExtensions
         return animationPlayer.AwaitCompletition(cancellationToken);
     }
     
+    public static Task PlayAndAwaitCompletition(
+        this AnimationPlayer animationPlayer, 
+        string animationName, 
+        CancellationToken completeToken,
+        CancellationToken cancellationToken
+    )
+    {
+        animationPlayer.Play(animationName);
+        
+        completeToken.Register(() => animationPlayer.Seek(animationPlayer.CurrentAnimationLength));
+
+        return animationPlayer.AwaitCompletition(cancellationToken);
+    }
+    
     public static void Play<T>(this AnimationPlayer animationPlayer, T animationName) where T : Enum
     {
         animationPlayer.Play(animationName.ToString());
