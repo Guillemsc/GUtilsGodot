@@ -1,5 +1,7 @@
+using System;
 using Godot;
 using GUtils.Di.Builder;
+using GUtils.Di.Container;
 using GUtils.Di.Delegates;
 using GUtils.Visibility.Visibles;
 using GUtilsGodot.UiStack.Entries;
@@ -10,6 +12,36 @@ namespace GUtilsGodot.UiStack.Extensions
 {
     public static class UiStackServiceDiExtensions
     {
+        public static IDiBindingActionBuilder<T> LinkToUiStackService<T>(
+            this IDiBindingActionBuilder<T> actionBuilder,
+            Func<IDiResolveContainer, T, UiStackEntry> getEntryFunc,
+            UiFrameLayer layer = UiFrameLayer.Default
+            )
+            where T : IUiStackElement
+        {
+            UiStackEntry? uiStackEntry = null;
+
+            actionBuilder.WhenInit((c, o) =>
+            {
+                IUiStackService uiStack = c.Resolve<IUiStackService>();
+
+                uiStackEntry = getEntryFunc.Invoke(c, o);
+
+                uiStack.Register(layer, uiStackEntry);
+            });
+
+            actionBuilder.WhenDispose((c, o) =>
+            {
+                IUiStackService uiStack = c.Resolve<IUiStackService>();
+
+                uiStack.Unregister(uiStackEntry!);
+            });
+
+            actionBuilder.NonLazy();
+
+            return actionBuilder;
+        }
+        
         static IDiBindingActionBuilder<T> LinkToUiStackService<T>(
             this IDiBindingActionBuilder<T> actionBuilder,
             Control node,

@@ -115,6 +115,7 @@ namespace GUtilsGodot.UiStack.Services
             }
 
             entry!.Node.MouseFilter = Control.MouseFilterEnum.Ignore;
+            entry!.Node.ProcessMode = Node.ProcessModeEnum.Disabled;
         }
 
         public IUiStackSequenceBuilder New()

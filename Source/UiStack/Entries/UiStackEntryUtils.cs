@@ -13,7 +13,7 @@ namespace GUtilsGodot.UiStack.Entries
                     continue;
                 }
 
-                refresh.Refreshable.Refresh();
+                refresh.Refreshable.Execute();
             }
         }
     }

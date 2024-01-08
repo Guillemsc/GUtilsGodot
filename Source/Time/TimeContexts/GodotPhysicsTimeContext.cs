@@ -26,7 +26,7 @@ public partial class GodotPhysicsTimeContext : Node, ITimeContext
     
     public override void _PhysicsProcess(double delta)
     {
-        DeltaTime = (float)delta * TimeScale;
+        DeltaTime = MathExtensions.Divide((float)delta, TimeScale);
         Time += DeltaTime.ToSeconds();
     }
 }
