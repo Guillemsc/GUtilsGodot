@@ -39,6 +39,25 @@ public static class AnimationPlayerExtensions
         animationPlayer.Seek(0);
     }
     
+    public static void Complete(this AnimationPlayer animationPlayer)
+    {
+        animationPlayer.Seek(animationPlayer.CurrentAnimationLength);
+    }
+    
+    public static void Play(
+        this AnimationPlayer animationPlayer, 
+        string animationName, 
+        bool instantly
+    ) 
+    {
+        animationPlayer.Play(animationName);
+        
+        if (instantly)
+        {
+            animationPlayer.Complete();
+        }
+    }
+    
     public static Task PlayAndAwaitCompletition(
         this AnimationPlayer animationPlayer, 
         string animationName, 
@@ -46,15 +65,20 @@ public static class AnimationPlayerExtensions
         CancellationToken cancellationToken
         )
     {
-        animationPlayer.Play(animationName);
+        animationPlayer.Play(animationName, instantly);
 
-        if (instantly)
-        {
-            animationPlayer.Seek(animationPlayer.CurrentAnimationLength);
-            return Task.CompletedTask;
-        }
+        return instantly ? Task.CompletedTask : animationPlayer.AwaitCompletition(cancellationToken);
+    }
+    
+    public static Task PlayAndAwaitCompletition(
+        this AnimationPlayer animationPlayer, 
+        string animationName, 
+        CancellationToken cancellationToken
+    )
+    {
+        animationPlayer.Play(animationName, false);
 
-        return animationPlayer.AwaitCompletition(cancellationToken);
+        return animationPlayer.PlayAndAwaitCompletition(animationName, false, cancellationToken);
     }
     
     public static Task PlayAndAwaitCompletition(
