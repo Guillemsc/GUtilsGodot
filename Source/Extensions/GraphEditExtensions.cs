@@ -20,4 +20,12 @@ public static class GraphEditExtensions
     {
         graphEdit.Connect("disconnection_request", Callable.From(action));
     }
+    
+    public static void ConnectEndNodeMove(
+        this GraphEdit graphEdit, 
+        Action action
+    )
+    {
+        graphEdit.Connect("end_node_move", Callable.From(action));
+    }
 }
