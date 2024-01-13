@@ -72,4 +72,11 @@ public static class NodeExtensions
     {
         return GodotObject.IsInstanceValid(node);
     }
+
+    public static PackedScene Pack(this Node node)
+    {
+        PackedScene packedScene = new PackedScene();
+        packedScene.Pack(node);
+        return packedScene;
+    }
 }
