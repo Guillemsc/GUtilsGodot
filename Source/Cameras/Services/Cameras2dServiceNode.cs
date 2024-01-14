@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Godot;
 using GUtils.Optionals;
 using GUtilsGodot.Cameras.Behaviours;
+using GUtilsGodot.Cameras.Enums;
 
 namespace GUtilsGodot.Cameras.Services;
 
 public partial class Cameras2dServiceNode : Node2D, ICameras2dService
 {
+    [Export] CameraProcessMode ProcessMode;
     [Export] Camera2D? Camera2D;
 
     readonly List<ICamera2dBehaviour> _camera2dBehaviours = new();
@@ -18,16 +20,20 @@ public partial class Cameras2dServiceNode : Node2D, ICameras2dService
 
     public override void _Process(double delta)
     {
-        float dt = (float)delta;
-        
-        foreach (ICamera2dBehaviour camera2dBehaviour in _camera2dBehaviours)
+        if (ProcessMode == CameraProcessMode.Default)
         {
-            camera2dBehaviour.Tick(dt, _previousStateValid, Camera2D!);
+            Tick(delta);
         }
-
-        _previousStateValid = true;
     }
-    
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (ProcessMode == CameraProcessMode.Physics)
+        {
+            Tick(delta);
+        }
+    }
+
     public void AddBehaviour(ICamera2dBehaviour behaviour)
     {
         _camera2dBehaviours.Add(behaviour);
@@ -63,5 +69,17 @@ public partial class Cameras2dServiceNode : Node2D, ICameras2dService
     public void InvalidateState()
     {
         _previousStateValid = false;
+    }
+
+    void Tick(double delta)
+    {
+        float dt = (float)delta;
+        
+        foreach (ICamera2dBehaviour camera2dBehaviour in _camera2dBehaviours)
+        {
+            camera2dBehaviour.Tick(dt, _previousStateValid, Camera2D!);
+        }
+
+        _previousStateValid = true;
     }
 }
