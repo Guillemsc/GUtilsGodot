@@ -31,4 +31,10 @@ public static class Node2DExtensions
         position.Y = set;
         node2D.GlobalPosition = position;
     }
+
+    public static void SetNode2DActive(this Node2D node2D, bool active)
+    {
+        node2D.Visible = active;
+        node2D.ProcessMode = active ? Node.ProcessModeEnum.Inherit :  Node.ProcessModeEnum.Disabled;
+    }
 }

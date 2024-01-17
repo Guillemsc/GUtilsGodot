@@ -30,6 +30,7 @@ public partial class CharacterBody2DCollisionCallbacks : Node2D
         
         for (int i = 0; i < CharacterBody2D.GetSlideCollisionCount(); i++)
         {
+            // TODO: Review, this allocates like crazy lol
             KinematicCollision2D kinematicCollision2D = CharacterBody2D.GetSlideCollision(i);
             GodotObject collider = kinematicCollision2D.GetCollider();
 
